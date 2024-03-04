@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["swagger"],
+  "homepage": "https://github.com/AliveCrow/swaggertoapi",
+  "author": "AliveCrow",
   "dependencies": {
     "axios": "^1.6.2",
     "handlebars": "^4.7.8",

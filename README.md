@@ -8,11 +8,11 @@ interface Config {
     dir: string; // 生成的位置
     template?: string; // 模板的位置，不填则使用默认 
     modules: ModulesItem[]; 
-    commonUrl?: string; // 只在swagger3中出现
 }
 interface ModulesItem {
     name: string;
     url: string;
+    commonUrl?: string; // 只在swagger3中出现
 }
 ```
 ```js
