@@ -1,0 +1,33 @@
+
+{{#with commonUrl as |commonUrl|}}
+{{#with ../schemas as |schemas|}}
+{{#each ../../paths}}
+{{#with @key as |outerKeyVar|}}
+{{#each ../this}}
+
+/* {{summary}} */
+function {{#registerApiName commonUrl outerKeyVar  @key}}{{/registerApiName}}({{#registerParams parameters @key}}{{/registerParams}}{{#registerBody requestBody schemas}}{{/registerBody }}) {
+    return axios({
+        url: `{{#getUrl outerKeyVar}}{{/getUrl}}`,
+        method: '{{@key}}',
+        {{#getParams parameters}}{{/getParams}}
+        {{#getBody requestBody schemas}}{{/getBody}}
+        ...config
+    })
+}
+{{/each}}
+{{/with}}
+{{/each}}
+{{/with}}
+
+export default {
+{{#each ../paths}}
+{{#with @key as |outerKeyVar|}}
+{{#each ../this}}
+    {{#registerApiName commonUrl outerKeyVar  @key}}{{/registerApiName}},
+{{/each}}
+{{/with}}
+{{/each}}
+}
+{{/with}}
+

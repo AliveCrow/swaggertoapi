@@ -1,0 +1,61 @@
+/* eslint-disable */
+/* tslint:disable */
+import axios, {AxiosHeaders} from 'axios'
+
+
+//#region interface----------------------------------------------------------------
+{{#each result}}
+export interface {{#formatName this.name}}{{/formatName}} {
+{{#each this.properties}}
+    /**
+    *	{{this.description}}
+    *	@format {{this.format}}
+    */
+    {{@key}}: {{#formatType this}}{{/formatType}},
+{{/each}}
+}
+{{/each}}
+export interface ServerResponse<T> {
+    /**
+    *
+    *	@format int32
+    */
+    code: number,
+    /**
+    *
+    *	@format
+    */
+    data: T,
+    /**
+    *
+    *	@format
+    */
+    msg: string,
+}
+
+//endregion----------------------------------------------------------------
+{{#each paths}}
+{{#with @key as |outerKeyVar|}}
+{{#each ../this as |outThis|}}
+/**
+*   {{summary}}
+*/
+function {{operationId}}({{#getRequestData parameters}}{{/getRequestData}}) {
+    return axios({
+        url: `{{../../../this.basePath}}{{#parseUrl outerKeyVar}}{{/parseUrl}}`,
+        method: '{{@key}}',
+        {{#requestType @key}}{{/requestType}}: {{#getOptions parameters}}{{/getOptions}},
+        headers
+    })
+}
+{{/each}}
+{{/with}}
+{{/each}}
+
+export default {
+{{#each paths}}
+    {{#each this}}
+        {{operationId}},
+    {{/each}}
+{{/each}}
+}
